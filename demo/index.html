@@ -5,16 +5,28 @@
   <style>
     body {
       background: #fafafa;
+      border: 2px solid black;
+      width: 600px;
+      height: 600px;
     }
   </style>
 </head>
 <body>
+  <div id="demo"></div>
+  <script type="module" src="../game-rockpaperscissors.js"></script>
+  <script>
 
-  <api-viewer src="../custom-elements.json" section="demo"></api-viewer>
+    function insertCell(id) {
+      const rockpaperscissors= `<game-rockpaperscissors id="${id}"></game-rockpaperscissors>`;
+      document.body.insertAdjacentHTML('beforeend', rockpaperscissors);
+    }
 
-  <script src="../nombre-componente.js" type="module"></script>
-  <script type="module">
-    import 'api-viewer-element';
+    function createCells(numCells) {
+      for (let cell = 0; cell < numCells; cell += 1) {
+          insertCell(`cell-${cell}`);
+      }   
+    }
+    createCells(15);
   </script>
 </body>
 </html>
