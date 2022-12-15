@@ -12,7 +12,6 @@ export class GameRockpaperscissors extends LitElement {
       item: { type: Array },
       cycle: { type: Object },
       memory: { type: Array },
-      age: { type: Number },
   }
 };
 
@@ -25,7 +24,7 @@ export class GameRockpaperscissors extends LitElement {
   this._maxWidth = 600;
   this._maxHeight = 600;
   this._maxRadius = 80;
-  this.id = `wccell-${this.randomNum(1, 1000)}-${  new Date().getTime()}`;
+  this.id = `wccell-${this.randomNum(1, 1000)}-${new Date().getTime()}`;
   this.position = {
     top: `${this.randomNum(this._maxRadius, this._maxHeight - this._maxRadius)}px`,
     left: `${this.randomNum(this._maxRadius, this._maxWidth - this._maxRadius)}px`
@@ -33,7 +32,6 @@ export class GameRockpaperscissors extends LitElement {
   this.diameter = '40px';
   this.type = this.randomNum(0, 3);
 
-  this.age = 0;
   const maxLife = 25;
   const minLife = 18;
   this.cycle = {
@@ -100,7 +98,7 @@ move() {
 }
 
 growth() {
-  this.age += 1;
+  // this.age += 1;
   if (parseInt(this.diameter, 40) < 40) {
     this.diameter = `${parseInt(this.diameter, 40) + 5}px`;
     this._setStyles();
@@ -127,9 +125,9 @@ _setStyles() {
   styles.width = this.diameter;
   styles.height = this.diameter;
   styles.backgroundColor = `hsl(${this.color * 10}, 100%, 50%)`;
-  if (this.age === this.cycle.life - 1) {
-    styles.animationName = 'death' ;
-  }
+  // if (this.age === this.cycle.life - 1) {
+   // styles.animationName = 'death' ;
+  // }
 }
 
 _searchForACell(e) {
@@ -156,9 +154,10 @@ _doItFoundACell(e) {
 
 _otherCellFound(e) {
   if (!this.memory.includes(e.detail.id)) {
-    if (this.age >= this.cycle.reproduction) {
-      this._insertCell(e);
-    }
+    // if (this.age >= this.cycle.reproduction) {
+    //   this._insertCell(e);
+    // }
+    
     // console.log(`${this.id} found a cell with id ${e.detail.id}`);
     this.memory.push(e.detail.id);
     // dispatch stopLife event
