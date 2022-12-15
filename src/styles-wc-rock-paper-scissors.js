@@ -7,7 +7,6 @@ export const RockPaperScissorsStyles = css `
 .cell {
     position: absolute;
     border-radius: 50%;
-    background-color: red;
     cursor: pointer;
     animation-duration: 2s;
     animation-name: show;
@@ -17,4 +16,10 @@ export const RockPaperScissorsStyles = css `
     align-items: center;
     color: white;
   }
+
+  .logo{
+    height: 35px
+  }
+
+
 `;

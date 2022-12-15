@@ -7,7 +7,7 @@ export class GameRockpaperscissors extends LitElement {
     return  {
       position: { type: Object },
       diameter: { type: String },
-      letter: { type: String },
+      item: { type: Object },
       memory: { type: Array },
     }
   };
@@ -28,9 +28,31 @@ export class GameRockpaperscissors extends LitElement {
   };
   this.diameter = '40px';
 
-  this.lettersOptions = ['R', 'P', 'S'];
-  this.letter = this.randomLetter(this.lettersOptions);
-  this.color = this.colorOfLetter(this.letter);
+  this.rockObject = { 
+    type: 'R',
+    image: 'rock.png',
+    description:'rock'
+  };
+
+  this.paperObject = { 
+    type: 'P',
+    image: 'paper.png',
+    description:'paper'
+  };
+
+  this.scissorsObject = { 
+    type: 'S',
+    image: 'scissors.png',
+    description:'scissors'
+  };
+
+  this.itemOptions = [
+    this.rockObject,
+    this.paperObject,
+    this.scissorsObject
+  ];
+
+  this.item = this.randomItem(this.itemOptions);
 
   this._moveTime = 500;
   this.memory = [];
@@ -75,7 +97,7 @@ export class GameRockpaperscissors extends LitElement {
           id: this.id,
           position: this.position,
           diameter: this.diameter,
-          letter: this.letter
+          item: this.item
         }
       })
     );
@@ -87,7 +109,6 @@ export class GameRockpaperscissors extends LitElement {
     styles.left = `${this.position.left}`;
     styles.width = this.diameter;
     styles.height = this.diameter;
-    styles.backgroundColor = this.color;
   }
 
   _searchForACell(e) {
@@ -113,27 +134,23 @@ export class GameRockpaperscissors extends LitElement {
   }
 
   _otherCellFound(e) {
-    // console.log(e);
     if (!this.memory.includes(e.detail.id)) {
-      const myLetter = this.letter;
-      const otherLetter = e.detail.letter;
+      const myItemType = this.item.type;
+      const otherItemType = e.detail.item.type;
 
-      if ((myLetter === 'P' && otherLetter === 'S') || (otherLetter === 'P' && myLetter === 'S')) {
-        this.letter = 'S';
-        e.detail.letter = 'S';
-        this.color = this.colorOfLetter(this.letter);
+      if ((myItemType === 'P' && otherItemType === 'S') || (otherItemType === 'P' && myItemType === 'S')) {
+        this.item = this.scissorsObject;
+        e.detail.item = this.scissorsObject;
       }
 
-      if ((myLetter === 'R' && otherLetter === 'S') || (otherLetter === 'R' && myLetter === 'S')) {
-        this.letter = 'R';
-        e.detail.letter = 'R';
-        this.color = this.colorOfLetter(this.letter);
+      if ((myItemType === 'R' && otherItemType === 'S') || (otherItemType === 'R' && myItemType === 'S')) {
+        this.item = this.rockObject;
+        e.detail.item = this.rockObject;
       }
 
-      if ((myLetter === 'R' && otherLetter === 'P') || (otherLetter === 'R' && myLetter === 'P')) {
-        this.letter = 'P';
-        e.detail.letter = 'P';
-        this.color = this.colorOfLetter(this.letter);
+      if ((myItemType === 'R' && otherItemType === 'P') || (otherItemType === 'R' && myItemType === 'P')) {
+        this.item = this.paperObject;
+        e.detail.item = this.paperObject;
       }
 
     }
@@ -164,24 +181,14 @@ export class GameRockpaperscissors extends LitElement {
     return parseInt(Math.random() * (max + 1 - min), 10) + min;
   }
 
-  randomLetter(lettersOptions) {
-    return lettersOptions[this.randomNum(0, 2)];
+  randomItem(itemOptions) {
+    return itemOptions[this.randomNum(0, 2)];
   }
 
-  colorOfLetter(letter) {
-    this._null = null;
-    if(letter === 'R'){
-      return 'grey';
-    }
-    if(letter === 'P'){
-      return 'blue';
-    }
-    return 'red';
-  }
 
   render() {
     return html`
-      <div class="cell">${this.letter}</div>
+      <div class="cell"><img src='../images/${this.item.image}' alt='${this.item.description}' class='logo ${this.item.description}'></div>
     `;
   }
 }
