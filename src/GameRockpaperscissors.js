@@ -8,8 +8,7 @@ export class GameRockpaperscissors extends LitElement {
       position: { type: Object },
       diameter: { type: String },
       type: { type: String },
-      letter: { type: Array },
-      item: { type: Array },
+      letter: { type: String },
       cycle: { type: Object },
       memory: { type: Array },
   }
@@ -39,8 +38,8 @@ export class GameRockpaperscissors extends LitElement {
     reproduction: this.randomNum(minLife - 10, maxLife - 10)
   };
 
-  this.letter = ['R', 'P', 'S'];
-  this.item = this.randomLetter(this.letter);
+  this.lettersOptions = ['R', 'P', 'S'];
+  this.letter = this.randomLetter(this.lettersOptions);
 
   this._growthTime = 1000;
 
@@ -61,7 +60,7 @@ export class GameRockpaperscissors extends LitElement {
 
 connectedCallback() {
   super.connectedCallback();
-  this._deathTimer = setTimeout(this.death, this._deathTime);
+  // this._deathTimer = setTimeout(this.death, this._deathTime);
   this.growthId = setInterval(this.growth, this._growthTime);
   this.moveId = setInterval(this.move, this._moveTime);
   document.addEventListener('living-wccell-move', this._searchForACell);
@@ -125,9 +124,6 @@ _setStyles() {
   styles.width = this.diameter;
   styles.height = this.diameter;
   styles.backgroundColor = `hsl(${this.color * 10}, 100%, 50%)`;
-  // if (this.age === this.cycle.life - 1) {
-   // styles.animationName = 'death' ;
-  // }
 }
 
 _searchForACell(e) {
@@ -153,15 +149,27 @@ _doItFoundACell(e) {
 }
 
 _otherCellFound(e) {
+  // console.log(e);
   if (!this.memory.includes(e.detail.id)) {
-    // if (this.age >= this.cycle.reproduction) {
-    //   this._insertCell(e);
-    // }
+    const myLetter = this.letter;
+    const otherLetter = e.detail.letter;
     
-    // console.log(`${this.id} found a cell with id ${e.detail.id}`);
-    this.memory.push(e.detail.id);
-    // dispatch stopLife event
-    // document.dispatchEvent(new CustomEvent('living-wccell-STOP'));
+
+    if ((myLetter === 'P' && otherLetter === 'S') || (otherLetter === 'P' && myLetter === 'S')) {
+      this.letter = 'S';
+      e.detail.letter = 'S';
+    }
+
+    if ((myLetter === 'R' && otherLetter === 'S') || (otherLetter === 'R' && myLetter === 'S')) {
+      this.letter = 'R';
+      e.detail.letter = 'R';
+    }
+
+    if ((myLetter === 'R' && otherLetter === 'P') || (otherLetter === 'R' && myLetter === 'P')) {
+      this.letter = 'P';
+      e.detail.letter = 'P';
+    }
+
   }
 }
 
@@ -197,14 +205,14 @@ randomNum(min, max) {
   return parseInt(Math.random() * (max + 1 - min), 10) + min;
 }
 
-randomLetter() {
-  return this.letter[this.randomNum(0, 2)];
+randomLetter(lettersOptions) {
+  return lettersOptions[this.randomNum(0, 2)];
 }
 
 
 render() {
   return html`
-    <div class="cell">${this.item}</div>
+    <div class="cell">${this.letter}</div>
   `;
 }
 
