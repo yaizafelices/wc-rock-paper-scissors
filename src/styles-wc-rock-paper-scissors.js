@@ -18,7 +18,7 @@ export const RockPaperScissorsStyles = css `
   }
 
   .logo{
-    height: 35px
+    height: 40px;
   }
 
 

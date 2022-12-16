@@ -21,7 +21,7 @@ export class GameRockpaperscissors extends LitElement {
   this._maxWidth = 600;
   this._maxHeight = 600;
   this._maxRadius = 80;
-  this.id = `wccell-${this.randomNum(1, 1000)}`;
+  this.id = `wccell-${this.randomNum(1, 1000)}-${  new Date().getTime()}`;
   this.position = {
     top: `${this.randomNum(this._maxRadius, this._maxHeight - this._maxRadius)}px`,
     left: `${this.randomNum(this._maxRadius, this._maxWidth - this._maxRadius)}px`
@@ -54,7 +54,7 @@ export class GameRockpaperscissors extends LitElement {
 
   this.item = this.randomItem(this.itemOptions);
 
-  this._moveTime = 500;
+  this._moveTime = 200;
   this.memory = [];
 
   this.move = this.move.bind(this);
