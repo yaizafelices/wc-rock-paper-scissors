@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #fafafa;
+      border: 2px solid black;
+      width: 600px;
+      height: 600px;
+    }
+  </style>
+</head>
+<body>
+  <div id="demo"></div>
+  <script type="module" src="./src/GameRockpaperscissors.js"></script>
+  <script>
+
+    function insertCell(id) {
+      const rockpaperscissors= `<game-rockpaperscissors id="${id}"></game-rockpaperscissors>`;
+      document.body.insertAdjacentHTML('beforeend', rockpaperscissors);
+    }
+
+    function createCells(numCells) {
+      for (let cell = 0; cell < numCells; cell += 1) {
+          insertCell(`cell-${cell}`);
+      }   
+    }
+    createCells(40);
+  </script>
+</body>
+</html>
