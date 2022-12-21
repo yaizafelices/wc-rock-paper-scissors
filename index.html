@@ -12,12 +12,13 @@
   </style>
 </head>
 <body>
+  <div id="demo"></div>
   <script type="module" src="./game-rockpaperscissors.js"></script>
   <script>
 
     function insertCell(id) {
-      const rockpaperscissors= `<game-rockpaperscissors id="${id}"></game-rockpaperscissors>`;
-      document.body.insertAdjacentHTML('beforeend', rockpaperscissors);
+      const rockPaperscissors= `<game-rockpaperscissors id="${id}"></game-rockpaperscissors>`;
+      document.body.insertAdjacentHTML('beforeend', rockPaperscissors);
     }
 
     function createCells(numCells) {
